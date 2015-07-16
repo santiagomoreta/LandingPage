@@ -1,0 +1,317 @@
+
+<polymer-element name="info-cliente" attributes="idCliente">
+	<template>
+<style>
+#boxInfo{
+  position: absolute;
+  top:5%;
+  left: 25%;
+  width: 35%;
+  height: auto;
+  padding: 3%;
+  padding-top: 0%;
+  border: 2px solid grey;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#container{
+ 
+}
+.titulo{
+
+
+}
+#id_com{
+  cursor: pointer
+}
+          
+  .transparent{
+      opacity: 0.6;
+  }
+  ul.toolbar{
+      
+      width:500px;
+      height:52px;
+      margin:0px;
+      padding:0px;
+      background-color:#fff;
+      border-bottom:2px solid #ccc;
+      list-style-type:none;       
+  }
+  ul.toolbar li{
+      display:inline;                            
+  }
+  ul.toolbar li a{ 
+      float:left;
+      cursor:pointer;
+      width:70px;
+      height:52px;
+      opacity: 0.6;
+  } 
+    
+  ul.toolbar li a:hover{                
+      opacity: 1.0;
+  }
+
+
+  a.zoomin{
+      background:#fff url(icons/modificar.png) no-repeat center center;
+  }
+  a.zoomout{
+      background:#fff url(icons/eliminar.png) no-repeat center center;
+  }
+
+  a.info{
+      background:#fff url(icons/salir.png) no-repeat center center;
+  }
+
+  #aceptar{
+    background-color: #526E9C;
+    color:white;
+  }
+  .button{
+        background-color: #526E9C;
+    color:white;
+  }
+
+
+@media screen and (max-width:720px){
+#boxInfo{
+  width: 96%;
+  height: auto;
+  border: 2px solid navy;
+  padding: 5px;
+  padding-top: 0px;
+    left: 1%;
+}
+#container{
+
+}
+  ul.toolbar{
+      
+      width:95%;
+      height:auto;
+      margin:0px;
+      padding:0px;
+      background-color:#fff;
+      border-bottom:2px solid #ccc;
+      list-style-type:none;       
+  }
+
+
+  a.zoomin{
+      background:#fff url(icons/modificar.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.zoomout{
+      background:#fff url(icons/eliminar.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+
+  a.info{
+      background:#fff url(icons/salir.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+
+  ul.toolbar li a{ 
+    width:40px;
+      height:40px;
+    
+  }  
+
+}
+</style>
+ <core-ajax id="ajax" method="GET" auto url="../php/get_nombreComercial.php" handleAs="json"></core-ajax>
+<div id="container">
+
+
+
+            <div id="boxInfo">
+              <div>
+                <div class="image_container" id="img_cont">            
+                      <ul class="toolbar transparent" id="tlbar" >
+                        <li><a on-tap="{{modificar}}"class="zoomin"></a></li>
+                        <li><a class="zoomout" on-tap="{{eliminar}}"></a></li>
+                        <li><a href="../home.html"class="info"></a></li>
+                    </ul>
+               </div>       
+            </div>
+
+
+        <span class="titulo"><h1>Informacion del Cliente</h1></span>
+
+              <paper-input id="nombre" floatingLabel="true"label="Nombre" value="{{cliente[0].nombre}}" disabled></paper-input>
+              <paper-input id="email"floatingLabel="true"label="Email" value="{{cliente[0].email}}" disabled></paper-input>
+
+              <a href="tel:{{cliente[0].telefono}}"><paper-input  id="telefono" floatingLabel="true"label="Telefono" value="{{cliente[0].telefono}}" disabled></paper-input></a>
+              <paper-input id="producto" floatingLabel="true"label="Producto" value="{{cliente[0].producto}}" disabled></paper-input>
+              <paper-input id="fecha_alta" floatingLabel="true"label="Fecha de Alta" value="{{cliente[0].fecha_alta}}" disabled></paper-input>
+            
+              <paper-input id="fecha_asig" floatingLabel="true"label="Fecha Asignacion" value="{{cliente[0].fecha_asig}}" disabled></paper-input><br>
+              <label>Comercial asignado   </label>
+              <paper-button class="button" on-tap="{{info_comercial}}"><a href"www.google.es" target="_blank">{{comer}}</a></paper-button>
+           
+                Asignar 
+                    <select id="selcom"name="comercial" disabled>
+                      <template repeat="{{com in comerciales}}">
+                        <option value="{{com.ID}}">{{com.nombre}}</option>
+                      </template>  
+                    </select><br>
+     
+              <paper-input id="comentarios" floatingLabel="true"label="Comentarios" value="{{cliente[0].comentarios}}" disabled></paper-input><br>
+              <paper-button id="aceptar" class="button"on-tap="{{aceptar}}" hidden>Aceptar</paper-button>
+             
+
+            </div>                                                             
+
+</div>
+
+
+
+	</template>
+<script>
+
+    Polymer({
+        ready: function () {
+       // As this is an example, populate some sample data inside
+       this.route = this.route || 'home'; // Select initial route.
+
+        var that=this;
+             var inn=this.$.container.querySelectorAll('paper-input');
+
+     for(var i=0;i<inn.length;i++){
+      inn[i].disabled=true;
+     }
+     this.$.aceptar.hidden=true;
+     //---------------comerciales-----------
+          this.$.ajax.addEventListener("core-response", function(e) {
+            that.comerciales=e.detail.response;
+        });
+          this.$.selcom.disabled=true;
+
+           h=location.hash;
+           var url=h.split('#cliente');
+            if(!this.idCliente){
+            this.idCliente=url[1];  
+            }
+            
+            this.cargaDatos();
+
+                  
+      },
+      muestraInfo:function(a,b,c){
+      },
+      cargaDatos:function(){
+          var that=this;
+          var those=that;
+
+
+        var url="php/get_cliente.php?ID="+this.idCliente;
+        $.get(url,function(data){
+          var tags = JSON.parse(data);
+          that.cliente=tags;
+          if(that.cliente[0].id_com !== null){
+             var uri="php/get_nombreComercialID.php?ID="+that.cliente[0].id_com;
+              $.get(uri,function(dataa){
+                var tags1 = JSON.parse(dataa);
+                those.comer=dataa;
+              });
+
+          }
+    
+
+        });
+
+
+      
+      },
+      modificar:function(){
+     var inn=this.$.container.querySelectorAll('paper-input');
+     var that=this;
+       for(var i=0;i<inn.length;i++){
+        inn[i].disabled=false;
+       }
+      this.$.aceptar.hidden=false;
+      this.$.selcom.disabled=false;
+     
+
+      },
+      eliminar:function(){
+      var url="php/elimina_cliente.php?ID="+this.idCliente;
+        if(confirm("Esta seguro")){
+           $.get(url,function(data){
+            console.log(data);
+            location.href="home.html";
+           });
+        }else{
+         
+        }
+    
+
+      },
+      comerciales:function(){
+        this.$.ajax.addEventListener("core-response", function(e) {
+            console.log(e.detail.response);
+        });
+
+      },
+      aceptar:function(){
+         var com_=this.$.selcom.value;
+        var that=this;
+      var cliente_mod=
+             {
+              id:this.idCliente,
+              nombre: that.$.nombre.value,
+              email: that.$.email.value,
+              telefono: that.$.telefono.value,
+              id_com:this.$.selcom.value || that.$.id_com.value,
+              fecha_alta: that.$.fecha_alta.value,
+              fecha_asig: that.$.fecha_asig.value,
+              comentarios: that.$.comentarios.value,
+              producto: that.$.producto.value
+          };
+
+          console.log(cliente_mod);
+            $.post("php/modifica_cliente.php",
+         cliente_mod,
+          function(data, status){
+             if(status=="success"){
+             that.ready();
+              //that.fire('cargaHome',"hola");
+              that.cargaDatos();
+              console.log(data);
+             }
+          });
+
+console.log(cliente_mod);
+
+
+      },
+      descargarPdf:function(){
+      var that=this;
+       var cliente_params="id="+this.idCliente+"&nombre="+that.$.nombre.value+"&email="+that.$.email.value+"&telefono="+that.$.telefono.value+"&comercial="+that.$.id_com.value+"&fecha_alta="+that.$.fecha_alta.value+"&fecha_asig="+that.$.fecha_asig.value+"&comentarios="+that.$.comentarios.value+"&producto="+that.$.producto.value;
+          var url="./php/crea_pdf.php?";
+        var url_c=url+cliente_params;
+        console.log(url_c)
+        location.href=url_c;
+
+
+                    
+   
+
+      },
+      info_comercial:function(){
+        this.fire('info_comercial',this.cliente[0].id_com);
+      },
+      telefono:function(){
+     
+
+      }
+
+      
+    });
+  </script>
+</polymer-element>

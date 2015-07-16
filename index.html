@@ -1,0 +1,470 @@
+<html>
+
+  <head>  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <script src="./bower_components/webcomponentsjs/webcomponents.js"></script>
+     </script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+
+
+
+
+<!--                                            -->
+<!--ya no es necesario el platform-->
+  <!--importando elemntos-->
+
+    <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="bower_components/core-menu/core-menu.html">
+    <link rel="import" href="bower_components/core-collapse/core-collapse.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-tabs/paper-tab.html">
+    <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="bower_components/core-item/core-item.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-decorator.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">    
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-action-dialog.html">
+    <link rel="import" href="bower_components/paper-ripple/paper-ripple.html">
+    <link rel="import" href="bower_components/paper-slider/paper-slider.html">
+    <link rel="import" href="bower_components/core-icons/core-icons.html">
+    <link rel="import" href="bower_components/core-icons/av-icons.html">
+    <link rel="import" href="bower_components/core-pages/core-pages.html">
+    <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="bower_components/core-drawer-panel/core-drawer-panel.html">
+    <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html"> 
+    <link rel="import" href="bower_components/core-animated-pages/transitions/slide-from-right.html"> 
+    <!--<link href="bower_components/sortable-table/css/bootstrap.css" rel="stylesheet" shim-shadowdom>-->
+
+    <link rel="import" href="./libs/flatiron-director/flatiron-director.html">
+
+    <!--        Elements                          -->
+<!--    <link rel="import" href="elements/main-app.html">-->
+    <link rel="import" href="elements/home-section.html">
+    <link rel="import" href="elements/info-cliente.html">
+    <link rel="import" href="elements/comerciales-section.html">
+    <link rel="import" href="elements/info-comercial.html">
+    <link rel="import" href="elements/nuevo-comercial.html">
+    <link rel="import" href="elements/listar-comercial.html">
+
+
+    
+
+    <style type="text/css">
+  
+      html{
+          margin-left: 15%;
+          margin-right: 15%;
+          margin-top:1%;
+           -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        background: url("../app/img/pattern.jpg");
+        }
+   
+       a {color:#1155CC;}
+        ul li {padding: 0px 0;}
+      #inicio{
+       background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #info{
+           background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #ccc{
+          background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+
+        }
+        #comerciales{
+           background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #otros{
+        background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+ 
+       
+    core-toolbar#menu{
+      
+  background-color: transparent;
+      height: 50px;
+      //margin-left: 100px;
+    }
+    #title{
+        font-size: 40px;
+    }
+    #gallery{
+      border: solid 5px green;
+      height: auto;
+    }
+    core-scaffold /deep/ core-icon-button{
+      visibility: hidden;
+    }
+    core-scaffold /deep/ core-toolbar{
+      
+    }
+    #tool{
+      visibility: visible;
+      
+    }
+    #menutool{
+ background-color: #526E9C;
+    }
+    paper-input{
+  
+    }
+    #nuevo{
+      margin-top:5%;
+      
+      color:white;
+    }
+    .butt{
+ 
+      color:white;
+    }
+    #user:hover{
+      background-color: rgba(250, 80, 44, 0.2);
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 5px;
+
+    }
+
+    @media only screen and (max-width: 610px) {
+       #collapse{
+    
+          width: 100%;
+          }
+           #collapse2{
+    
+          width: 100%;
+          }
+      #tool{
+        visibility: hidden;
+      }
+      #title{
+      width: 120px;
+      
+      font-size: 25px;
+      }
+      core-scaffold /deep/ core-icon-button{
+      visibility: visible;
+      }
+      #mijines{
+        visibility: visible;
+      }
+      #ninja-slider{
+        height: 22%;
+      }
+    }
+    body[unresolved]{
+      background-color: black;
+    }
+    
+    </style>
+
+
+  </head>
+    
+
+
+
+
+
+  <body>
+
+    <template is="auto-binding">
+<flatiron-director route="{{route}}" autoHash></flatiron-director>
+<core-scaffold responsiveWidth="2000px" drawerWidth="50%" >
+  <core-header-panel navigation flex mode="watefall" style="background-color:white">
+    <core-toolbar id="menutool"><div style="color:white">{{usuario}}</div></core-toolbar>
+   <!-- <core-menu theme="core-light-theme">-->
+    <core-menu vertical layout valueattr="hash" selected="{{route}}"flex >
+      <template repeat="{{page in pages}}">
+        <core-item flex label="{{page.name}}"   hash="{{page.hash}}" icon="{{page.icon}}" onclick="closeDrawer()">
+          <a href="#{{page.hash}}"></a>
+        </core-item>
+      </template> 
+       <core-item flex center-justified onclick="salir()" label="Salir" icon="exit-to-app"></core-item>
+
+  </core-menu>
+
+  </core-header-panel>
+  <div tool horizontal layout center flex id="tool">
+  <div id="mijines"style="width:50%; margin-top:0%"> <div id="title"><a href="index.html" style="text-decoration:none; color:white">APP<span style="color:red">-WEB</span></a></div></div>
+          <core-toolbar id="menu" horizontal layout  >
+        <core-menu style="width:800px" horizontal layout valueattr="hash" selected="{{route}}"flex >
+            <template repeat="{{page in pages}}">
+              <core-item flex center-justified   on-tap="{{cargaDatos}}" label="{{page.name}}" hash="{{page.hash}}"icon="{{page.icon}}" >
+                <a href="#{{page.hash}}" ></a>
+              </core-item>
+            </template> 
+            <core-item flex center-justified onclick="salir()" label="Salir" icon="exit-to-app"></core-item>
+        </core-menu>
+
+        <div id="user">
+          {{usuario}}
+      </div>
+      </core-toolbar>
+  </div>
+
+
+
+    
+  
+    
+
+
+
+
+      <div id="container">
+
+
+        <core-animated-pages valueattr="hash" selected="{{route}}"
+          id="animated">
+
+          <section hash="home" id="inicio">
+                <home-section id="homeSection"></home-section>
+          </section>
+
+          <section  hash="comerciales" id="comerciales">
+                <comerciales-section id="com_section"></comerciales-section>
+          </section >
+
+          <section  hash="{{clienteHash}}"id="info">
+            <info-cliente id="ic" idCliente="{{idCliente}}"></info-cliente>
+          </section>
+
+
+          <section hash="{{comercialHash}}" id="ccc">
+            <info-comercial id="icom" idComercial="{{idComercial}}"></info-comercial>
+          </section>
+
+
+          <section hash="listaCom" id="info">
+            <listar-comercial id="lista_com" idComercial="{{idComercial}}" nombreComercial="{{nombreCom}}"></listar-comercial>
+          </section>
+          <section hash="nuevoCom" id="info">
+            <nuevo-comercial id="lista_com" ></nuevo-comercial>
+          </section>
+
+        </core-animated-pages>
+        
+
+
+      </div>
+  
+      </core-scaffold>
+    </template> 
+      </body>
+
+</html>
+<script>
+
+
+    var template = document.querySelector('template[is="auto-binding"]');
+     template.pages=[
+     {name : "Inicio",hash : "home" , icon : "home"},
+     {name : "Comerciales",hash : "comerciales" , icon : "create"}
+        ];
+if(localStorage.getItem("usuario")){
+ template.usuario=localStorage.getItem("usuario");
+}else{
+  template.usuario="Invitado";
+}
+
+if(location.hash.length>20){
+  var token=location.hash;
+  token=token.split('#');
+  token=token[1];
+      var token_j=
+             {
+              token: token
+          };
+        $.post("php/get_token.php",
+         token_j,
+          function(data, status){
+            var tags1 = JSON.parse(data);
+            template.usuario=tags1[0].nombre;
+            localStorage.setItem("usuario", tags1[0].nombre);
+            location.href="index.html#comerciales";
+
+       
+            });
+}
+
+
+
+
+
+
+
+
+
+ if(!document.location.hash){
+  location.hash="home";
+ }
+
+ //--------------------infocliente-------------------------
+var reg=new RegExp("cliente");
+var h=location.hash;
+
+if(reg.test(location.hash)){
+var url=h.split('#cliente');
+var hh="cliente"+url[1];
+template.clienteHash=hh;
+console.log(template.clienteHash);
+
+
+}
+
+//-------------------info comercial-------------------
+
+var regC=new RegExp("comercial+[0-9]");
+var hC=location.hash;
+
+if(regC.test(location.hash)){
+var urlC=hC.split('#comercial');
+var hhC="comercial"+urlC[1];
+template.comercialHash=hhC;
+
+
+
+}
+
+
+document.addEventListener("cargalista",function(e){
+  var lista=template.$.com_section;
+  console.log(lista);
+  lista.cargaDatos();
+  location.href="./index.html#comerciales";
+
+})
+
+
+//------------------
+      template.cargaDatos=function(a,b,c){
+              
+        console.log(c.label);
+        if(c.label=="Inicio"){
+          location.reload();
+        }
+        if(c.label=="Comerciales"){
+          location.reload();
+        }
+      }
+       
+      
+       function closeDrawer(){
+          var x=  document.querySelector("core-scaffold");
+          x.closeDrawer();
+  
+       }
+      function salir(){
+        localStorage.usuario="Invitado";
+        location.href="index.html";
+      
+
+       }
+
+      document.addEventListener("info-cliente", function(e){
+          var pages=document.getElementById('animated');
+          var infoC=document.getElementById('info');
+          infoC.hash="cliente"+e.detail;
+          template.idCliente=e.detail
+
+          template.route="cliente"+e.detail;
+          document.getElementById('ic').cargaDatos();
+          document.getElementById('ic').ready();
+    }); 
+
+      document.addEventListener('info_comercial', function(e){
+          var pages=document.getElementById('animated');
+          var infoCC=document.getElementById('ccc');
+          infoCC.hash="comercial"+e.detail;
+          template.idComercial=e.detail;
+
+          template.route="comercial"+e.detail;
+          document.getElementById('icom').cargaDatos();
+          document.getElementById('icom').ready();
+      });
+
+
+      document.addEventListener('lista_comercial', function(e){
+     var pages=document.getElementById('animated');
+console.log(e.detail)
+      template.idComercial=e.detail.id;
+      template.nombreCom=e.detail.nombre;
+      pages.selected="listaCom";
+      document.getElementById('lista_com').cargaDatos();
+
+      });
+
+      document.addEventListener('nuevo_comercial', function(e){
+     var pages=document.getElementById('animated');
+      console.log(e.detail)
+      pages.selected="nuevoCom";
+      });
+
+
+
+
+   document.addEventListener("cargaHome", function(e){
+    console.log(e)
+      document.querySelector("#homeSection").carga();
+    }); 
+
+
+</script>

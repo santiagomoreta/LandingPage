@@ -1,0 +1,113 @@
+
+<polymer-element name="listar-comercial" attributes="idComercial nombreComercial">
+	<template>
+<style>
+#boxInfo{
+  position: absolute;
+  top:5%;
+  left: 25%;
+  width: 42%;
+  height: auto;
+  padding: 3%;
+  padding-top: 0%;
+  border: 2px solid grey;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+    tr:hover{
+      background-color: #526E9C;
+    }
+
+
+@media screen and (max-width:720px){
+#boxInfo{
+  width: 96%;
+  height: auto;
+  border: 2px solid navy;
+  padding: 5px;
+  padding-top: 0px;
+    left: 1%;
+}
+
+
+}
+</style>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<div id="container">
+
+
+
+            <div id="boxInfo">
+
+
+
+        <span class="titulo"><h1>Listado de expedientes de {{nombreComercial}}</h1></span>
+
+             
+
+ <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Telefono</th>
+      <th>Producto</th>
+    </tr>
+    </thead>
+    <tbody>
+       <template repeat="{{cliente in clientes}}" >
+                      <tr  >
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.nombre}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.email}}</td>
+                        <td ><h href="tel:{{cliente.telefono}}">{{cliente.telefono}}</a></td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.producto}}</td>
+                      </tr>
+    </template>      
+    </tbody>
+  </table>
+  </div>
+</div>                                                             
+
+</div>
+
+
+
+	</template>
+<script>
+
+    Polymer({
+        ready: function () {
+           this.route = this.route || 'home'; // Select initial route.
+
+     //---------------comerciales-----------
+
+
+
+           
+      },
+      muestraInfo:function(a,b,c){
+          this.fire('info-cliente',c.id);
+      },
+      cargaDatos:function(){
+         var that=this;
+          var those=that;
+
+        var url="php/get_listaComercial.php?id="+this.idComercial;
+        console.log(url+"  -->com");
+        $.get(url,function(data){
+          var tags = JSON.parse(data);
+          that.clientes=tags;
+        });
+      
+      
+      }
+
+      
+    });
+  </script>
+</polymer-element>

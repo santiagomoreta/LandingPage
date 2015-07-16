@@ -1,0 +1,115 @@
+
+<polymer-element name="comerciales-section" >
+	<template>
+<style>
+#boxInfo{
+  position: absolute;
+  top:5%;
+  left: 25%;
+  width: 35%;
+  height: auto;
+  padding: 3%;
+  padding-top: 0%;
+  border: 2px solid grey;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+    tr:hover{
+      background-color: #526E9C;
+    }
+    img#add{
+      float: right;
+       cursor:pointer;
+      opacity: 0.6;
+   
+    }
+        img#add:hover{
+     opacity: 1.0;   
+    }
+
+@media screen and (max-width:720px){
+#boxInfo{
+  width: 96%;
+  height: auto;
+  border: 2px solid navy;
+  padding: 5px;
+  padding-top: 0px;
+    left: 1%;
+}
+}
+</style>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<core-ajax id="ajax" method="GET" auto url="../php/get_todosComerciales.php" handleAs="json"></core-ajax>
+<div id="container">
+
+
+
+            <div id="boxInfo">
+
+<div>
+
+        <div><h1>Listado de Comerciales<img id="add"src="icons/add.png" on-tap="{{nuevoComercial}}"></img></h1></div>
+</div>
+             
+
+ <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Telefono</th>
+    </tr>
+    </thead>
+    <tbody>
+       <template repeat="{{comercial in comerciales}}" >
+                      <tr  >
+                        <td id="{{comercial.ID}}"on-tap="{{muestraInfo}}">{{comercial.nombre}}</td>
+                        <td id="{{comercial.ID}}"on-tap="{{muestraInfo}}">{{comercial.email}}</td>
+                        <td ><a href="tel:{{comercial.telefono}}">{{comercial.telefono}}</a></td>
+                      </tr>
+    </template>      
+    </tbody>
+  </table>
+  </div>
+</div>                                                             
+
+</div>
+
+
+	</template>
+<script>
+
+   Polymer({
+        ready: function () {
+       // As this is an example, populate some sample data inside
+       this.route = this.route || 'home'; // Select initial route.
+       
+        this.cargaDatos();
+    
+
+                  
+      },
+      muestraInfo:function(a,b,c){
+      
+     this.fire('info_comercial',c.id);
+      },
+      cargaDatos:function(){
+         var that=this;
+           this.$.ajax.addEventListener("core-response", function(e) {
+            that.comerciales=e.detail.response;
+          });
+      
+      },
+      nuevoComercial:function(){
+        this.fire("nuevo_comercial");
+      }
+
+      
+    });
+  </script>
+</polymer-element>

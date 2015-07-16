@@ -1,0 +1,388 @@
+<polymer-element name="main-app" >
+  <template>
+<style>
+
+    
+  
+      html{
+          margin-left: 15%;
+          margin-right: 15%;
+          margin-top:1%;
+           -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        background: url("../app/img/pattern.jpg");
+        }
+   
+       a {color:#1155CC;}
+        ul li {padding: 0px 0;}
+      #inicio{
+       background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #info{
+           background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #ccc{
+          background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+
+        }
+        #comerciales{
+           background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+        #otros{
+        background: url("../app/img/pattern.jpg");
+          background-size: 100% 100%;
+          height: 100%;
+          width: 100%;
+          position: relative;
+          background-position: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+       
+        }
+ 
+       
+    core-toolbar#menu{
+      
+  background-color: transparent;
+      height: 50px;
+      //margin-left: 100px;
+    }
+    #title{
+        font-size: 40px;
+    }
+    #gallery{
+      border: solid 5px green;
+      height: auto;
+    }
+    core-scaffold /deep/ core-icon-button{
+      visibility: hidden;
+    }
+    core-scaffold /deep/ core-toolbar{
+      
+    }
+    #tool{
+      visibility: visible;
+      
+    }
+    #menutool{
+ background-color: #526E9C;
+    }
+    paper-input{
+  
+    }
+    #nuevo{
+      margin-top:5%;
+      
+      color:white;
+    }
+    .butt{
+ 
+      color:white;
+    }
+
+    @media only screen and (max-width: 610px) {
+       #collapse{
+    
+          width: 100%;
+          }
+           #collapse2{
+    
+          width: 100%;
+          }
+      #tool{
+        visibility: hidden;
+      }
+      #title{
+      width: 120px;
+      
+      font-size: 25px;
+      }
+      core-scaffold /deep/ core-icon-button{
+      visibility: visible;
+      }
+      #mijines{
+        visibility: visible;
+      }
+      #ninja-slider{
+        height: 22%;
+      }
+    }
+    body[unresolved]{
+      background-color: black;
+    }
+    
+    </style>
+
+
+<flatiron-director route="{{route}}" autoHash></flatiron-director>
+<core-scaffold responsiveWidth="2000px" drawerWidth="50%" >
+  <core-header-panel navigation flex mode="watefall" style="background-color:white">
+    <core-toolbar id="menutool"><div style="color:white">Menu</div></core-toolbar>
+   <!-- <core-menu theme="core-light-theme">-->
+    <core-menu vertical layout valueattr="hash" selected="{{route}}"flex >
+      <template repeat="{{page in pages}}">
+        <core-item flex label="{{page.name}}"   hash="{{page.hash}}" icon="{{page.icon}}" onclick="closeDrawer()">
+          <a href="#{{page.hash}}"></a>
+        </core-item>
+      </template> 
+        <core-item flex label="Salir" icon="exit-to-app" onclick="closeDrawer()">
+          <a href="php/desconectar.php"></a>
+        </core-item>
+  </core-menu>
+
+  </core-header-panel>
+  <div tool horizontal layout center flex id="tool">
+  <div id="mijines"style="width:50%; margin-top:0%"> <div id="title"><a href="index.html" style="text-decoration:none; color:white">APP<span style="color:red">-WEB</span></a></div></div>
+          <core-toolbar id="menu" horizontal layout  >
+        <core-menu style="width:800px" horizontal layout valueattr="hash" selected="{{route}}"flex >
+            <template repeat="{{page in pages}}">
+              <core-item flex center-justified   on-tap="{{cargaDatos}}" label="{{page.name}}" hash="{{page.hash}}"icon="{{page.icon}}" >
+                <a href="#{{page.hash}}" ></a>
+              </core-item>
+            </template> 
+        <core-item flex label="Salir" icon="exit-to-app" onclick="closeDrawer()">
+          <a href="php/desconectar.php"></a>
+        </core-item>
+        </core-menu>
+      </core-toolbar>
+  </div>
+
+
+
+    
+  
+    
+
+
+
+
+      <div id="container">
+
+
+        <core-animated-pages valueattr="hash" selected="{{route}}"
+          transitions="slide-from-right" id="animated">
+
+          <section hash="home" id="inicio">
+                <home-section id="homeSection"></home-section>
+          </section>
+
+          <section  hash="comerciales" id="comerciales">
+                <comerciales-section id="com_section"></comerciales-section>
+          </section >
+
+          <section  hash="otros" id="otros">
+              
+              webbb
+          </section> 
+
+          <section  hash="{{clienteHash}}"id="info">
+            <info-cliente id="ic" idCliente="{{idCliente}}"></info-cliente>
+          </section>
+
+
+          <section hash="{{comercialHash}}" id="ccc">
+            <info-comercial id="icom" idComercial="{{idComercial}}"></info-comercial>
+          </section>
+
+
+          <section hash="listaCom" id="info">
+            <listar-comercial id="lista_com" idComercial="{{idComercial}}" nombreComercial="{{nombreCom}}"></listar-comercial>
+          </section>
+          <section hash="nuevoCom" id="info">
+            <nuevo-comercial id="lista_com" ></nuevo-comercial>
+          </section>
+
+        </core-animated-pages>
+        
+
+
+      </div>
+  
+      </core-scaffold>
+    </template> 
+    
+<script>
+  Polymer({
+
+      ready:function(){
+
+        this.pages=[
+     {name : "Inicio",hash : "home" , icon : "home"},
+     {name : "Comerciales",hash : "comerciales" , icon : "create"},
+     {name : "Otros",hash : "otros" , icon : "apps"},
+        ];
+
+
+
+      
+
+     if(!location.hash){
+      location.hash="home";
+     }
+ //--------------------infocliente-------------------------
+    var reg=new RegExp("cliente");
+    var h=location.hash;
+
+    if(reg.test(location.hash)){
+    var url=h.split('#cliente');
+    var hh="cliente"+url[1];
+    template.clienteHash=hh;
+    console.log(template.clienteHash);
+    }
+    //-------------------info comercial-------------------
+
+    var regC=new RegExp("comercial+[0-9]");
+    var hC=location.hash;
+
+    if(regC.test(location.hash)){
+    var urlC=hC.split('#comercial');
+    var hhC="comercial"+urlC[1];
+    template.comercialHash=hhC;
+    }
+
+
+  this.$.addEventListener("cargalista",function(e){
+  var lista=template.$.com_section;
+  console.log(lista);
+  lista.cargaDatos();
+  location.href="./index.html#comerciales";
+    })
+
+      this.$.addEventListener("info-cliente", function(e){
+          var pages=this.$.animated;
+          var infoC=this.$.info;
+          infoC.hash="cliente"+e.detail;
+          this.idCliente=e.detail
+
+          this.route="cliente"+e.detail;
+          this.$.ic.cargaDatos();
+          this.$.ic.ready();
+    }); 
+
+      document.addEventListener('info_comercial', function(e){
+          var pages=this.$.animated;
+          var infoCC=this.$.ccc;
+          infoCC.hash="comercial"+e.detail;
+          this.idComercial=e.detail;
+
+          this.route="comercial"+e.detail;
+          this.$.icom.cargaDatos();
+          this.$.icom.ready();
+      });
+
+      this.addEventListener('lista_comercial', function(e){
+       var pages=this.$.animated;
+       console.log(e.detail)
+      this.idComercial=e.detail.id;
+      this.nombreCom=e.detail.nombre;
+      pages.selected="listaCom";
+      this.$.lista_com.cargaDatos();
+
+      });
+
+      this.addEventListener('nuevo_comercial', function(e){
+     var pages=dthis.$.animated;
+      console.log(e.detail)
+      pages.selected="nuevoCom";
+      });
+
+
+
+
+   this.addEventListener("cargaHome", function(e){
+    console.log(e)
+      this.$.homeSection.carga();
+    }); 
+
+
+
+
+
+
+},
+ cargaDatos:function(a,b,c){
+              
+        console.log(c.label);
+        if(c.label=="Inicio"){
+          location.reload();
+        }
+      }
+
+
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------
+     
+       
+      
+       function closeDrawer(){
+          var x=  document.querySelector("core-scaffold");
+          x.closeDrawer();
+  
+       }
+
+
+
+
+
+
+
+
+
+</script>

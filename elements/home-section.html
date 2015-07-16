@@ -1,0 +1,127 @@
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<polymer-element name="home-section">
+	<template>
+    <style>
+    tr:hover{
+      background-color: #526E9C;
+    }
+    .rojo{
+      background-color:  rgba(215, 44, 44, 0.5);
+    }
+    </style>
+
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <core-ajax id="ajax" method="GET" auto url="../php/get_lista.php" handleAs="json"></core-ajax>
+
+      <core-ajax id="ajax2" method="GET" auto url="../php/get_nombreComercial.php" handleAs="json"></core-ajax>
+
+<div class="container">
+  <h2>Listado Clientes</h2>
+  <p>Listado con los posibles clientes que han llenado el formulario de nuestra pagina web:</p>                                                                                      
+  <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Telefono</th>
+      <th>Fecha de Alta</th>
+      <th>Comercial Asign.</th>
+      <th>Fecha de Asign.</th>
+      <th>Producto</th>
+    </tr>
+    </thead>
+    <tbody>
+       <template repeat="{{cliente in clientes}}" >
+              <template if="{{cliente.id_com}}">
+                      <tr >
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}"  >{{cliente.nombre}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}"  >{{cliente.email}}</td>
+                        <td ><a href="tel:{{cliente.telefono}}">{{cliente.telefono}}</a></td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}" >{{cliente.fecha_alta}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}" >{{cliente.comercial}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}" >{{cliente.fecha_asig}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}" >{{cliente.producto}}</td>
+                      </tr>
+            </template>
+            <template if="{{!cliente.id_com}}">
+                      <tr   class="rojo">
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.nombre}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.email}}</td>
+                        <td ><a href="tel:{{cliente.telefono}}">{{cliente.telefono}}</a></td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.fecha_alta}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.comercial}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.fecha_asig}}</td>
+                        <td id="{{cliente.ID}}"on-tap="{{muestraInfo}}">{{cliente.producto}}</td>
+                      </tr>
+            </template>
+
+    </template>      
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+
+	</template>
+<script>
+
+    Polymer({
+        ready: function () {
+          var that=this;
+          var those=that;
+          var arr=[];
+
+          // As this is an example, populate some sample data inside
+        this.route = location.hash;
+
+
+          this.$.ajax.addEventListener("core-response", function(e) {
+            that.clientes=e.detail.response;
+       
+              that.$.ajax2.addEventListener("core-response",function(e){
+
+                those.comerciales=e.detail.response;
+                for(var i=0;i<that.clientes.length;i++){
+                  if(that.clientes[i].id_com !== null){
+                   // console.log(that.clientes[i].id_com);
+                      for(var j=0;j<those.comerciales.length;j++){
+                     // console.log(those.comerciales[j].ID);
+                      //console.log(that.clientes[i]['id_com']);
+                        if(that.clientes[i]['id_com']=== those.comerciales[j].ID ){
+                         
+                          that.clientes[i]['comercial']=those.comerciales[j]['nombre'];
+                        }
+
+                    }
+                  }else{
+                    that.clientes[i]['comercial']="Sin Asignar";
+                  }
+                }
+
+              });
+    
+       
+          });
+
+ 
+
+
+   
+                  
+      },
+      muestraInfo:function(a,b,c){
+        this.fire('info-cliente',c.id);
+      },
+      carga:function(){
+     this.ready();
+      }
+
+      
+    });
+  </script>
+</polymer-element>

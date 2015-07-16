@@ -1,0 +1,111 @@
+
+<polymer-element name="nuevo-comercial" >
+	<template>
+<style>
+#boxInfo{
+  position: absolute;
+  top:5%;
+  left: 25%;
+  width: 35%;
+  height: auto;
+  padding: 3%;
+  padding-top: 0%;
+  border: 2px solid grey;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#container{
+ 
+}
+.titulo{
+
+
+}
+          
+ 
+  #aceptar{
+    background-color: #526E9C;
+    color:white;
+  }
+
+@media screen and (max-width:720px){
+#boxInfo{
+  width: 96%;
+  height: auto;
+  border: 2px solid navy;
+  padding: 5px;
+  padding-top: 0px;
+    left: 1%;
+}
+#container{
+
+}
+  
+}
+</style>
+<div id="container">
+
+
+
+            <div id="boxInfo">
+
+
+        <span class="titulo"><h1>Informacion del Comercial</h1></span>
+              <paper-input id="nombre" floatingLabel="true"label="Nombre"  ></paper-input>
+              <paper-input id="email"floatingLabel="true"label="Email" ></paper-input>
+              <paper-input id="telefono" floatingLabel="true"label="Telefono" ></paper-input><br>
+
+              <paper-button id="aceptar" on-tap="{{aceptar}}">Aceptar</paper-button>
+             
+
+            </div>                                                             
+
+</div>
+
+
+
+	</template>
+<script>
+
+    Polymer({
+        ready: function () {
+           this.route = this.route || 'home'; // Select initial route.
+
+
+
+
+           
+      },
+     
+      aceptar:function(){
+        var that=this;
+      var comercial_mod=
+             {
+              nombre: this.$.nombre.value,
+              email: this.$.email.value,
+              telefono: this.$.telefono.value
+          };
+
+          
+          $.post("php/nuevo_comercial.php",
+         comercial_mod,
+          function(data, status){
+             if(status=="success"){
+               location.reload();
+             location.href="./index.html#comerciales";
+            
+             console.log("bottton");
+                 
+             }
+        
+            });
+          console.log(comercial_mod);
+
+      }
+      
+    });
+  </script>
+</polymer-element>

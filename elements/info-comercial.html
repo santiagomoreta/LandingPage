@@ -1,0 +1,279 @@
+
+<polymer-element name="info-comercial" attributes="idComercial">
+	<template>
+<style>
+#boxInfo{
+  position: absolute;
+  top:5%;
+  left: 25%;
+  width: 35%;
+  height: auto;
+  padding: 3%;
+  padding-top: 0%;
+  border: 2px solid grey;
+  border-radius: 7px;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#container{
+ 
+}
+.titulo{
+
+
+}
+          
+  .transparent{
+      opacity: 0.6;
+  }
+  ul.toolbar{
+      
+      width:500px;
+      height:52px;
+      margin:0px;
+      padding:0px;
+      background-color:#fff;
+      border-bottom:2px solid #ccc;
+      list-style-type:none;       
+  }
+  ul.toolbar li{
+      display:inline;                            
+  }
+  ul.toolbar li a{ 
+      float:left;
+      cursor:pointer;
+      width:70px;
+      height:52px;
+      opacity: 0.6;
+  }   
+  ul.toolbar li a:hover{                
+      opacity: 1.0;
+  }
+  a.label{
+      background:#fff url(icons/add.png) no-repeat center center;
+  }
+  a.fav{
+      background:#fff url(icons/lista.png) no-repeat center center;
+  }
+  a.shop{
+      background:#fff url(icons/email.png) no-repeat center center;
+  }
+  a.zoomin{
+      background:#fff url(icons/modificar.png) no-repeat center center;
+  }
+  a.zoomout{
+      background:#fff url(icons/eliminar.png) no-repeat center center;
+  }
+
+  a.info{
+      background:#fff url(icons/salir.png) no-repeat center center;
+  }
+  a.edit{
+      background:#fff url(icons/pdf.png) no-repeat center center;
+  }
+  #aceptar{
+    background-color: #526E9C;
+    color:white;
+  }
+
+@media screen and (max-width:720px){
+#boxInfo{
+  width: 96%;
+  height: auto;
+  border: 2px solid navy;
+  padding: 5px;
+  padding-top: 0px;
+    left: 1%;
+}
+#container{
+
+}
+  ul.toolbar{
+      
+      width:95%;
+      height:auto;
+      margin:0px;
+      padding:0px;
+      background-color:#fff;
+      border-bottom:2px solid #ccc;
+      list-style-type:none;       
+  }
+    a.label{
+      background:#fff url(icons/add.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.fav{
+      background:#fff url(icons/lista.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.shop{
+      background:#fff url(icons/email.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.zoomin{
+      background:#fff url(icons/modificar.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.zoomout{
+      background:#fff url(icons/eliminar.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+
+  a.info{
+      background:#fff url(icons/salir.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  a.edit{
+      background:#fff url(icons/pdf.png) no-repeat center center;
+      background-size: 32px 32px;
+  }
+  ul.toolbar li a{ 
+    width:40px;
+      height:40px;
+    
+  }  
+
+}
+</style>
+ <core-ajax id="ajax" method="GET" auto url="../php/get_nombreComercial.php" handleAs="json"></core-ajax>
+<div id="container">
+
+
+
+            <div id="boxInfo">
+              <div>
+                <div class="image_container" id="img_cont">            
+                      <ul class="toolbar transparent" id="tlbar" >
+                        <li><a on-tap="{{modificar}}"class="zoomin"></a></li>
+                        <li><a class="zoomout" on-tap="{{eliminar}}"></a></li>
+                        <li><a class="fav" on-tap="{{listaComercial}}"></a></li>
+                        <li><a class="label" on-tap="{{nuevoComercial}}"></a></li>
+                        <li><a href="../index.html"class="info"></a></li>
+                    </ul>
+               </div>       
+            </div>
+
+
+        <span class="titulo"><h1>Informacion del Comercial</h1></span>
+              <paper-input id="id_com" floatingLabel="true"label="ID" value="{{comercial[0].ID}}" disabled></paper-input>
+              <paper-input id="nombre" floatingLabel="true"label="Nombre" value="{{comercial[0].nombre}}" disabled></paper-input>
+              <paper-input id="email"floatingLabel="true"label="Email" value="{{comercial[0].email}}" disabled></paper-input>
+              <a href="tel:{{comercial[0].telefono}}"><paper-input id="telefono" floatingLabel="true"label="Telefono" value="{{comercial[0].telefono}}" disabled></paper-input><br>
+
+              <paper-button id="aceptar" on-tap="{{aceptar}}" hidden>Aceptar</paper-button>
+             
+
+            </div>                                                             
+
+</div>
+
+
+
+	</template>
+<script>
+
+    Polymer({
+        ready: function () {
+           this.route = this.route || 'home'; // Select initial route.
+        var that=this;
+             var inn=this.$.container.querySelectorAll('paper-input');
+
+     for(var i=0;i<inn.length;i++){
+      inn[i].disabled=true;
+     }
+     this.$.aceptar.hidden=true;
+     //---------------comerciales-----------
+h=location.hash;
+           var url=h.split('#comercial');
+            if(!this.idComercial){
+            this.idComercial=url[1];
+            }
+            this.cargaDatos();
+
+
+
+           
+      },
+      muestraInfo:function(a,b,c){
+      },
+      cargaDatos:function(){
+         var that=this;
+          var those=that;
+
+        var url="php/get_infoComercial.php?id="+this.idComercial;
+        $.get(url,function(data){
+          var tags = JSON.parse(data);
+          that.comercial=tags;
+        });
+      
+      
+      },
+      modificar:function(){
+         var inn=this.$.container.querySelectorAll('paper-input');
+     var that=this;
+       for(var i=1;i<inn.length;i++){
+        inn[i].disabled=false;
+       }
+      this.$.aceptar.hidden=false;
+
+      },
+      eliminar:function(){
+        var that=this;
+       var url="php/elimina_comercial.php?ID="+this.idComercial;
+        console.log(url);
+        if(confirm("Esta seguro")){
+           $.get(url,function(data){
+            console.log(data);
+            //location.href="./index.html#comerciales";
+            that.fire("cargalista");
+             location.href="./index.html#comerciales";
+             location.reload();
+           });
+        }else{
+         
+        }
+
+      },
+      comerciales:function(){
+
+      },
+      aceptar:function(){
+        var that=this;
+      var comercial_mod=
+             {
+              id:this.idComercial,
+              nombre: that.$.nombre.value,
+              email: that.$.email.value,
+              telefono: that.$.telefono.value,
+          };
+
+          
+          $.post("php/modifica_comercial.php",
+         comercial_mod,
+          function(data, status){
+             if(status=="success"){
+             location.reload();
+             }
+            });
+  console.log(comercial_mod);
+
+      },
+      descargarPdf:function(){
+
+      },
+      listaComercial:function(){
+        var infoCom={id:this.idComercial, nombre: this.$.nombre.value};
+        this.fire("lista_comercial",infoCom);
+      },
+      nuevoComercial:function(){
+        this.fire("nuevo_comercial");
+
+      }
+
+
+      
+    });
+  </script>
+</polymer-element>
